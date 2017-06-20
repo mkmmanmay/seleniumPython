@@ -11,18 +11,29 @@ chromedriver = "C:/browserdrivers/chromedriver.exe"
 os.environ["webdriver.chrome.driver"] = chromedriver
 driver = webdriver.Chrome(chromedriver)
 driver.maximize_window()
-driver.get("http://www.google.co.in")
-
+driver.get("http://qa.guru.com/login.aspx")
 print(driver.title)
-search = driver.find_element_by_id("lst-ib")
-search.send_keys("Inception movie")
-search.send_keys(Keys.ENTER)
-time.sleep(3)
+username = driver.find_element_by_xpath("//input[contains(@id, 'Login_txtUserName')]")
+username.send_keys("gurufree001@gmail.com")
+password = driver.find_element_by_xpath("//input[contains(@id, 'Login_txtPassword')]")
+password.send_keys("12345678")
+password.send_keys(Keys.ENTER)
 #  http://selenium-python.readthedocs.io/getting-started.html
 try:
-    element = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, 'res')))
+    element = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//label[contains(@id, 'ContentPlaceHolder')]")))
     # (( )) is given because we are passing tuple of arguments
 except Exception as e:
     print("Possible locator issue.")
+
+question = driver.find_element_by_xpath("//label[contains(@id, 'ContentPlaceHolder')]").text
+answerBox = driver.find_element_by_xpath("//input[contains(@id, 'TextBox')]")
+answerBox.send_keys(question)
+answerBox.send_keys(Keys.ENTER)
+
+try:
+    section = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//section[@class='module_box dashboardSection top']")))
+except Exception as e:
+    print("Error is: ", e)
+    print("Dashboard didn't load in time.")
 finally:
     driver.quit()
