@@ -18,6 +18,7 @@ username.send_keys("gurufree001@gmail.com")
 password = driver.find_element_by_xpath("//input[contains(@id, 'Login_txtPassword')]")
 password.send_keys("12345678")
 password.send_keys(Keys.ENTER)
+password.send_keys(Keys.ENTER)
 #  http://selenium-python.readthedocs.io/getting-started.html
 try:
     element = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//label[contains(@id, 'ContentPlaceHolder')]")))
